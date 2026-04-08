@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+{% block title %} 
+login
+{%endblock%} 
+{% block extra_css %} 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}" />
+{% endblock %} 
+{% block content %}
+<main>
+  <h1>Login to the Smart Hospital System</h1>
+</main>
+{% endblock %} 
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

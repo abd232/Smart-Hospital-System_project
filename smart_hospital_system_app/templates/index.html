@@ -1,0 +1,17 @@
+{% extends "base.html" %} 
+{% block title %} 
+Smart Hospital System 
+{%endblock%} 
+{% block extra_css %} 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+{% endblock %} 
+{% block content %}
+<main>
+  <h1>Welcome to the Smart Hospital System</h1>
+</main>
+{% endblock %} 
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}

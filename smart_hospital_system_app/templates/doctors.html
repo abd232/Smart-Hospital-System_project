@@ -1,0 +1,161 @@
+{% extends "base.html" %} 
+{% block title %} 
+login
+{%endblock%} 
+{% block extra_css %} 
+{% load static %}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="{% static 'css/doctors.css' %}" />
+{% endblock %} 
+{% block content %}
+<div class="pt-28 pb-20 container mx-auto px-4 md:px-8">
+  <div class="text-center max-w-2xl mx-auto mb-14">
+    <span
+      class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase bg-accent text-accent-foreground mb-4"
+      >Our Doctors</span
+    >
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
+      Meet Our Specialists
+    </h1>
+    <p class="text-muted-foreground text-lg">
+      Our team of experienced doctors is dedicated to providing you with the
+      best possible care.
+    </p>
+  </div>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"
+  >
+    <div
+      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+    >
+      <div
+        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+      >
+        <span class="text-2xl font-bold text-primary">SM</span>
+      </div>
+      <h3 class="font-bold text-foreground text-lg">Dr. Sarah Mitchell</h3>
+      <p class="text-primary text-sm font-medium mb-1">Cardiologist</p>
+      <p class="text-muted-foreground text-xs mb-4">15+ years experience</p>
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-2 h-2 rounded-full bg-secondary"></span
+        ><span class="text-xs text-muted-foreground">Available</span>
+      </div>
+      <a
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
+        href="/book"
+        >Book Appointment</a
+      >
+    </div>
+    <div
+      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+    >
+      <div
+        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+      >
+        <span class="text-2xl font-bold text-primary">JC</span>
+      </div>
+      <h3 class="font-bold text-foreground text-lg">Dr. James Chen</h3>
+      <p class="text-primary text-sm font-medium mb-1">Neurologist</p>
+      <p class="text-muted-foreground text-xs mb-4">12+ years experience</p>
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-2 h-2 rounded-full bg-secondary"></span
+        ><span class="text-xs text-muted-foreground">Available</span>
+      </div>
+      <a
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
+        href="/book"
+        >Book Appointment</a
+      >
+    </div>
+    <div
+      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+    >
+      <div
+        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+      >
+        <span class="text-2xl font-bold text-primary">AO</span>
+      </div>
+      <h3 class="font-bold text-foreground text-lg">Dr. Amara Osei</h3>
+      <p class="text-primary text-sm font-medium mb-1">Orthopedic Surgeon</p>
+      <p class="text-muted-foreground text-xs mb-4">18+ years experience</p>
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-2 h-2 rounded-full bg-muted-foreground"></span
+        ><span class="text-xs text-muted-foreground">Unavailable</span>
+      </div>
+      <a
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
+        disabled=""
+        href="/book"
+        >Book Appointment</a
+      >
+    </div>
+    <div
+      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+    >
+      <div
+        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+      >
+        <span class="text-2xl font-bold text-primary">PS</span>
+      </div>
+      <h3 class="font-bold text-foreground text-lg">Dr. Priya Sharma</h3>
+      <p class="text-primary text-sm font-medium mb-1">Pediatrician</p>
+      <p class="text-muted-foreground text-xs mb-4">10+ years experience</p>
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-2 h-2 rounded-full bg-secondary"></span
+        ><span class="text-xs text-muted-foreground">Available</span>
+      </div>
+      <a
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
+        href="/book"
+        >Book Appointment</a
+      >
+    </div>
+    <div
+      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+    >
+      <div
+        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+      >
+        <span class="text-2xl font-bold text-primary">MT</span>
+      </div>
+      <h3 class="font-bold text-foreground text-lg">Dr. Michael Torres</h3>
+      <p class="text-primary text-sm font-medium mb-1">Ophthalmologist</p>
+      <p class="text-muted-foreground text-xs mb-4">14+ years experience</p>
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-2 h-2 rounded-full bg-secondary"></span
+        ><span class="text-xs text-muted-foreground">Available</span>
+      </div>
+      <a
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
+        href="/book"
+        >Book Appointment</a
+      >
+    </div>
+    <div
+      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+    >
+      <div
+        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+      >
+        <span class="text-2xl font-bold text-primary">FA</span>
+      </div>
+      <h3 class="font-bold text-foreground text-lg">Dr. Fatima Al-Rashid</h3>
+      <p class="text-primary text-sm font-medium mb-1">General Physician</p>
+      <p class="text-muted-foreground text-xs mb-4">20+ years experience</p>
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="w-2 h-2 rounded-full bg-secondary"></span
+        ><span class="text-xs text-muted-foreground">Available</span>
+      </div>
+      <a
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
+        href="/book"
+        >Book Appointment</a
+      >
+    </div>
+  </div>
+</div>
+{% endblock %} 
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
