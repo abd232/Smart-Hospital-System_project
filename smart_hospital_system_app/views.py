@@ -25,3 +25,9 @@ def doctors(request):
 def ai(request):
     # Implement AI-related logic here
     return render(request, 'ai.html')
+
+def book(request):
+    if request.method == 'POST':
+        # Handle booking logic here
+        pass
+    return render(request, 'booking.html')
