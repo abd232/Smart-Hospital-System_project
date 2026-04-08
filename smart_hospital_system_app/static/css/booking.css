@@ -1,0 +1,14 @@
+.time-slot {
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
+  cursor: pointer;
+}
+.time-slot:hover {
+  transform: scale(1.05);
+  background-color: #e0f2fe; /* light blue */
+}
+.selected {
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+}
