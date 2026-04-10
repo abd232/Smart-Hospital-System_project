@@ -1,11 +1,11 @@
-{% extends "base.html" %} 
-{% block title %} 
-login
+{% extends "patient/base.html" %}
+{% block title %}
+Doctors 
 {%endblock%} 
 {% block extra_css %} 
 {% load static %}
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="{% static 'css/doctors.css' %}" />
+<link rel="stylesheet" href="{% static 'css/patient/doctors.css' %}" />
 {% endblock %} 
 {% block content %}
 <div class="pt-28 pb-20 container mx-auto px-4 md:px-8">
@@ -155,7 +155,7 @@ login
   </div>
 </div>
 {% endblock %} 
-{% block extra_js %}
+{% block extra_js %} 
 {% load static %}
 <script src="{% static 'js/index.js' %}"></script>
 {% endblock %}
