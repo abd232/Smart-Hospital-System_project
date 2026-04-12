@@ -1,12 +1,20 @@
+from datetime import date, datetime
+from email import errors
+
 import bcrypt
 from django.contrib.auth.models import User
 from django.db import models
 # Create your models here.
 
 class UserManager(models.Manager):
-    def create_customer(self,post_data):
-        user = User.objects.create_user(username=post_data['username'], email=post_data['email'], password=post_data['password'])
-        patient = Patient.objects.create(user=user, phone=post_data['phone'], address=post_data['address'])
+    def create_patient(self,post_data):
+        first_name = post_data['first_name']
+        last_name = post_data['last_name']
+        email = post_data['email']
+        password = post_data['password']
+        password_hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+        user = User.objects.create(first_name=first_name , last_name=last_name , username=email, email=email , password=password_hashed)
+        patient = Patient.objects.create(user=user, date_of_birth=post_data['date_of_birth'], phone=post_data['phone'], address=post_data['address'])
         return patient
     
     def validate_login(self,post_data):
@@ -15,23 +23,35 @@ class UserManager(models.Manager):
         password = post_data.get('password' , '')
         user = User.objects.filter(email=email).first()
         if user:
-            if not user.check_password(password):
+            if not bcrypt.checkpw(password.encode(), user.password.encode()):
                 errors['user'] = 'Email or password not valid'
         else:
             errors['user'] = 'Email or password not valid'
         return errors
     def validate_registration(self,post_data):
         errors={}
-        if len(post_data['username']) < 3:
-            errors['username'] = 'Username must be at least 3 characters long'
+        if len(post_data['first_name']) < 2:
+            errors['first_name'] = 'First name must be at least 2 characters long'
+        if len(post_data['last_name']) < 2:
+            errors['last_name'] = 'Last name must be at least 2 characters long'
         if len(post_data['email']) < 5:
             errors['email'] = 'Email must be at least 5 characters long'
+        if User.objects.filter(email=post_data['email']).exists():
+            errors['email'] = 'Email already exists'
         if len(post_data['password']) < 8:
             errors['password'] = 'Password must be at least 8 characters long'
         if post_data['password'] != post_data['confirm_password']:
             errors['confirm_password'] = 'Passwords do not match'
-        if User.objects.filter(email=post_data['email']).exists():
-            errors['email'] = 'Email already exists'
+        dob = post_data.get('date_of_birth', '')
+        if not dob:
+            errors['date_of_birth'] = 'Date of birth is required'
+        else:
+            try:
+                dob_date = datetime.strptime(dob, '%Y-%m-%d').date()
+                if dob_date > date.today():
+                    errors['date_of_birth'] = 'Date of birth cannot be in the future'
+            except ValueError:
+                errors['date_of_birth'] = 'Invalid date format'
         if post_data['phone'] and len(post_data['phone']) < 4:
             errors['phone'] = 'Phone number must be at least 4 characters long'
         if post_data['address'] and len(post_data['address']) < 10:

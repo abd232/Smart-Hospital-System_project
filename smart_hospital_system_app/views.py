@@ -1,5 +1,9 @@
-from django.shortcuts import render
+import email
 
+from django.shortcuts import render
+from .models import User, Patient, Doctor, Section, Clinic, MedicalRecord, Appointment
+from django.shortcuts import render, redirect
+from django.contrib.auth import login as auth_login
 # Create your views here.
 
 def index(request):
@@ -7,14 +11,29 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-        # Handle login logic here
-        pass
+        errors = Patient.objects.validate_login(request.POST)
+        if errors:
+            context={
+                'errors' : errors,
+            }
+            return render(request , 'account/login.html' , context=context)            
+        else:
+            user = User.objects.filter(email=request.POST.get('email')).first()     
+            auth_login(request, user)
+            return redirect("/")
     return render(request, 'account/login.html')
 
 def register(request):
     if request.method == 'POST':
-        # Handle registration logic here
-        pass
+        errors = Patient.objects.validate_registration(request.POST)
+        if errors:
+            context={
+                'errors' : errors,
+            }
+            return render(request , 'account/register.html' , context=context)
+        else:
+            Patient.objects.create_patient(request.POST)
+            return redirect('/login/')
     return render(request, 'account/register.html')
 
 def doctors(request):

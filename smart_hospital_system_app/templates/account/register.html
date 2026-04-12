@@ -1,17 +1,169 @@
-{% extends "base.html" %} 
+{% extends "patient/base.html" %} 
 {% block title %} 
-register   
+register 
 {%endblock%} 
 {% block extra_css %} 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/register.css' %}" />
-{% endblock %} 
-{% block content %}
-<main>
-  <h1>Register for the Smart Hospital System</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'css/account/login_registration.css' %}"
+/>
+{% endblock %} {% block content %}
+<main class="auth-body">
+  <div
+    class="container d-flex justify-content-center align-items-center min-vh-100"
+  >
+    <div class="card auth-card">
+      <h2 class="text-center fw-bold">Create Account</h2>
+      <p class="text-center subtitle">Patient Registration</p>
+
+      {% if errors %}
+      <div class="alert alert-danger">
+        {% for key, value in errors.items %}
+        <div>{{ value }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="/register/">
+        {% csrf_token %}
+        <div class="row">
+          <div class="form-floating mb-3 col">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              placeholder="first name"
+              name="first_name"
+            />
+            <label for="floatingInput" class="pl-15">First Name</label>
+          </div>
+
+          <div class="form-floating mb-3 col">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInput"
+              placeholder="last name"
+              name="last_name"
+            />
+            <label for="floatingInput" class="pl-15">Last Name</label>
+          </div>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="email"
+            class="form-control"
+            id="floatingInput"
+            placeholder="email"
+            name="email"
+          />
+          <label for="floatingInput">Email</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Password"
+            name="password"
+          />
+          <label for="floatingInput">Password</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Confirm Password"
+            name="confirm_password"
+          />
+          <label for="floatingInput">Confirm Password</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="date"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Date of Birth"
+            name="date_of_birth"
+          />
+          <label for="floatingInput">Date of Birth</label>
+        </div>
+
+        <div class="form-group form-group-mobile mb-3">
+          <span class="border-end country-code px-2">+970</span>
+          <input
+            type="text"
+            class="form-control"
+            id="ec-mobile-number"
+            aria-describedby="emailHelp"
+            placeholder="590000000"
+            name="phone"
+          />
+        </div>
+
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="floatingInput"
+            placeholder="adress"
+            name="address"
+          />
+          <label for="floatingInput">Adress</label>
+        </div>
+        {% for key,value in errors.items %}
+        <p class="text-danger">{{ value }}</p>
+        {% endfor %}
+        <button class="btn btn-main w-100">Register</button>
+      </form>
+
+      <div class="divider">
+        <span>or continue with</span>
+      </div>
+      <div class="social-login">
+        <button class="btn-social google">
+          <i class="fab fa-google"></i>
+          Google
+        </button>
+        <button class="btn-social facebook">
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+      </div>
+
+      <p class="text-center mt-3">
+        You already have an account?
+        <a href="/login/">Login</a>
+      </p>
+    </div>
+  </div>
 </main>
 {% endblock %} 
-{% block extra_js %}
+{% block extra_js %} 
 {% load static %}
 <script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
