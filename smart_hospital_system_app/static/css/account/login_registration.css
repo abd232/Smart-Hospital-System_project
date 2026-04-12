@@ -1,0 +1,394 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+
+.auth-body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #f1f6fa, #ffffff);
+  height: 100vh;
+}
+
+/* CARD */
+.auth-card {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* TEXT */
+main h2,
+main p {
+  color: #144f79 !important;
+}
+
+.subtitle {
+  color: #7a8fa6;
+  margin-bottom: 25px;
+}
+
+/* INPUT */
+.form-control {
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #d1d9e0;
+  transition: 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--light-blue);
+  box-shadow: 0 0 0 2px rgba(50, 140, 193, 0.2);
+}
+
+/* BUTTON */
+.btn-main {
+  background: linear-gradient(90deg, #3d74a1, #328cc1);
+  border: none;
+  color: white !important;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-main:hover {
+  background: linear-gradient(90deg, #2a6799, #2a76a5);
+  transform: translateY(-2px);
+}
+
+/* LINKS */
+a {
+  color: var(--light-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bdc3c7;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 12px 12px 45px;
+  border: 1px solid #bdc3c7;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #2a5078;
+  box-shadow: 0 0 8px rgba(42, 80, 120, 0.2);
+}
+
+.pl-15 {
+  padding-left: 1.5rem !important;
+}
+
+.login-btn {
+  width: 100%;
+  background: linear-gradient(to right, #3f79a8, #3793d1);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.login-btn:hover {
+  opacity: 0.95;
+}
+.divider {
+  margin: 25px 0;
+  position: relative;
+  border-bottom: 1px solid #eee;
+}
+
+.divider span {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 0 10px;
+  font-size: 0.8rem;
+  color: #95a5a6;
+}
+
+/* Social Buttons */
+.social-login {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.btn-social {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+.btn-social img {
+  width: 18px;
+}
+
+.facebook {
+  background: linear-gradient(to right, #3f79a8, #3793d1);
+  color: white;
+  border: none;
+}
+
+.signup-link {
+  font-size: 0.9rem;
+}
+
+.signup-link a {
+  color: #3a6ca2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.input-group-addon {
+  cursor: pointer;
+}
+
+.input-group-date .date {
+  text-transform: uppercase;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+  border: 1px solid #34495e;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+  min-width: 300px;
+  max-width: 100%;
+  width: auto;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:before,
+.bootstrap-datetimepicker-widget.dropdown-menu.bottom:after {
+  display: none;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table td,
+.bootstrap-datetimepicker-widget.dropdown-menu table th {
+  border-radius: 0;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table td.old,
+.bootstrap-datetimepicker-widget.dropdown-menu table td.new {
+  color: #bbb;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table td.today:before {
+  border-bottom-color: #0095ff;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table td.active,
+.bootstrap-datetimepicker-widget.dropdown-menu table td.active:hover,
+.bootstrap-datetimepicker-widget.dropdown-menu table td span.active {
+  background-color: #0095ff;
+  text-shadow: none;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table td.active.today:before,
+.bootstrap-datetimepicker-widget.dropdown-menu
+  table
+  td.active:hover.today:before,
+.bootstrap-datetimepicker-widget.dropdown-menu
+  table
+  td
+  span.active.today:before {
+  border-bottom-color: #fff;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table th {
+  height: 40px;
+  padding: 0;
+  width: 40px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table th.picker-switch {
+  width: auto;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table tr:first-of-type th {
+  border-bottom: 1px solid #34495e;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table td.day {
+  height: 32px;
+  line-height: 32px;
+  padding: 0;
+  width: auto;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu table td span {
+  border-radius: 0;
+  height: 77px;
+  line-height: 77px;
+  margin: 0;
+  width: 25%;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu .datepicker-months tbody tr td,
+.bootstrap-datetimepicker-widget.dropdown-menu .datepicker-years tbody tr td,
+.bootstrap-datetimepicker-widget.dropdown-menu .datepicker-decades tbody tr td {
+  padding: 0;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu .datepicker-decades tbody tr td {
+  height: 27px;
+  line-height: 27px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu
+  .datepicker-decades
+  tbody
+  tr
+  td
+  span {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 46px;
+  line-height: 46px !important;
+  padding: 0;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu
+  .datepicker-decades
+  tbody
+  tr
+  td
+  span:not(.decade) {
+  display: none;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu .timepicker-picker table td {
+  padding: 0;
+  width: 30%;
+  height: 20px;
+  line-height: 20px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu
+  .timepicker-picker
+  table
+  td:nth-child(2) {
+  width: 10%;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu .timepicker-picker table td a,
+.bootstrap-datetimepicker-widget.dropdown-menu .timepicker-picker table td span,
+.bootstrap-datetimepicker-widget.dropdown-menu
+  .timepicker-picker
+  table
+  td
+  button {
+  border: none;
+  border-radius: 0;
+  height: 56px;
+  line-height: 56px;
+  padding: 0;
+  width: 100%;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu
+  .timepicker-picker
+  table
+  td
+  span {
+  color: #333;
+  margin-top: -1px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu
+  .timepicker-picker
+  table
+  td
+  button {
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu
+  .timepicker-picker
+  table
+  td
+  button:hover {
+  background-color: #eee;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu .picker-switch table td {
+  border-top: 1px solid #34495e;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu .picker-switch table td a,
+.bootstrap-datetimepicker-widget.dropdown-menu .picker-switch table td span {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  width: 100%;
+}
+
+.todayText:before {
+  content: "Today's Date";
+}
+/*
+Source - https://stackoverflow.com/a/66947564
+Posted by d3vma
+Retrieved 2026-04-11, License - CC BY-SA 4.0
+*/
+
+.input-group-addon {
+  cursor: pointer;
+}
+
+.input-group.date {
+  text-transform: uppercase;
+}
+
+.form-control {
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+.form-control:hover,
+.form-control:focus,
+.form-control:active {
+  box-shadow: none;
+}
+.form-control:focus {
+  border: 1px solid #34495e;
+}
+
+.form-group-mobile {
+  border: 1px solid #ced4da;
+  padding: 5px;
+  border-radius: 6px;
+  width: auto;
+}
+.form-group-mobile:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+.form-group-mobile input {
+  display: inline-block;
+  width: auto;
+  border: none;
+}
+.form-group-mobile input:focus {
+  box-shadow: none;
+}
