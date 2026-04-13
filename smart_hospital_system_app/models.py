@@ -1,8 +1,9 @@
 from datetime import date, datetime
+from django.shortcuts import render
 from email import errors
 
 import bcrypt
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User 
 from django.db import models
 # Create your models here.
 
@@ -74,6 +75,7 @@ class Doctor(models.Model):
     specialty = models.CharField(max_length=100)
     description = models.TextField()
     updated_at = models.DateTimeField(auto_now=True)
+    Clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE) # type: ignore
 
     def __str__(self):
         return self.user.username
@@ -95,32 +97,57 @@ class Clinic(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE , related_name='clinics')
     def __str__(self):
         return self.name
+    
 
+class Appointment(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+    )
+
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='appointments')
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='appointments')
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE, related_name='appointments')
+
+    appointment_date = models.DateTimeField()
+
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.patient.user.username} - {self.doctor.user.username} - {self.status}"
+    
+    
 class MedicalRecord(models.Model):
-    option = (
+    STATUS = (
         ('active', 'Active'),
         ('inactive', 'Inactive'),
     )
 
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE , related_name='medical_records')
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE , related_name='medical_records')
-    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE , related_name='medical_records')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='medical_records')
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='medical_records')
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
+
     diagnosis = models.TextField()
     treatment = models.TextField()
+
+    status = models.CharField(max_length=10, choices=STATUS, default='active')
+
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10, choices=option, default='active')
 
     def __str__(self):
-        return f"{self.patient.user.username} - {self.doctor.user.username} - {self.clinic.name} - {self.created_at}"
+        return f"{self.patient.user.username} - {self.doctor.user.username}"
 
-class Appointment(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE , related_name='appointments')
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE , related_name='appointments')
-    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE , related_name='appointments')
-    appointment_date = models.DateTimeField()
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_messages")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_messages")
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+class Note(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.patient.user.username} - {self.doctor.user.username} - {self.clinic.name} - {self.appointment_date}"
