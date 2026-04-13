@@ -1,3 +1,52 @@
-h1 {
-  color: green;
+.hero {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  padding: 100px 0 140px;
+}
+
+.hero h1 {
+  color: #0d3b66;
+}
+
+.hero span {
+  color: #0d6efd;
+}
+
+.hero p {
+  color: #355070;
+}
+
+.btn-primary-custom {
+  background: #0d6efd;
+  color: white;
+  border-radius: 8px;
+}
+
+.btn-outline-custom {
+  border: 1px solid #0d6efd;
+  color: #0d6efd;
+  border-radius: 8px;
+}
+
+.features {
+  margin-top: -80px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+}
+
+.feature-card h5 {
+  color: #0d3b66;
+}
+
+.feature-card p {
+  color: #6c757d;
 }
