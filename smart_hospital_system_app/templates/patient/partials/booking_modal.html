@@ -1,0 +1,89 @@
+<div
+  class="modal fade"
+  id="bookingModal"
+  tabindex="-1"
+  aria-labelledby="bookingModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
+      <div class="modal-header border-0 pb-0">
+        <h1
+          class="modal-title fs-3 fw-bold text-primary"
+          id="bookingModalLabel"
+        >
+          Book Appointment
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body p-4 p-md-5">
+        <div class="bg-primary bg-opacity-10 p-4 rounded-4 mb-4">
+          <h5 class="fw-bold text-primary mb-2">Doctor Information</h5>
+          <p id="doctorName" class="mb-1 fw-semibold">Doctor name here</p>
+          <p id="doctorClinic" class="mb-0 text-muted">Clinic name here</p>
+        </div>
+
+        <form
+          id="bookingForm"
+          method="POST"
+          action="{% url 'create_appointment' %}"
+        >
+          {% csrf_token %}
+
+          <input type="hidden" name="doctor_id" id="doctorIdInput" />
+          <input type="hidden" name="selected_time" id="selectedTimeInput" />
+
+          <div class="mb-4">
+            <label for="date" class="form-label fw-semibold">Select Date</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              class="form-control form-control-lg"
+              required
+            />
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Select Time Slot</label>
+            <div
+              id="timeSlots"
+              class="d-grid gap-2"
+              style="
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+              "
+            ></div>
+          </div>
+
+          <div class="mb-4">
+            <label for="notes" class="form-label fw-semibold"
+              >Additional Notes</label
+            >
+            <textarea
+              id="notes"
+              name="notes"
+              rows="3"
+              class="form-control"
+              placeholder="Optional notes..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-success btn-lg w-100">
+            Confirm Appointment
+          </button>
+        </form>
+
+        <div id="confirmation" class="alert alert-success mt-4 d-none">
+          <strong>Appointment Confirmed</strong>
+          <p id="confirmationText" class="mb-0 mt-2"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

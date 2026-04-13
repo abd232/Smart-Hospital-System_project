@@ -1,0 +1,4 @@
+.form-inline input,
+.form-inline select {
+  max-width: 200px;
+}
