@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'smart_hospital_system_db',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': '123456',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
