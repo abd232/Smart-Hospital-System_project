@@ -74,25 +74,25 @@ class Doctor(models.Model):
     specialty = models.CharField(max_length=100)
     description = models.TextField()
     updated_at = models.DateTimeField(auto_now=True)
-
+    clinic = models.ForeignKey('Clinic', on_delete=models.CASCADE, related_name='doctors')
     def __str__(self):
         return self.user.username
 
-    
-class Section(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return self.name
 
 class Clinic(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE , related_name='clinics')
+    section = models.ForeignKey('Section', on_delete=models.CASCADE, related_name='clinics')
+    def __str__(self):
+        return self.name
+
+class Section(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name
 
@@ -119,6 +119,7 @@ class Appointment(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE , related_name='appointments')
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE , related_name='appointments')
     appointment_date = models.DateTimeField()
+    notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

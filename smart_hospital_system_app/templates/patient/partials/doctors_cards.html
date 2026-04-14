@@ -1,0 +1,70 @@
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"
+>
+  {% for doctor in page_obj %}
+  <div
+    class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+  >
+    <div
+      class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+    >
+      <span class="text-2xl font-bold text-primary">
+        {{ doctor.user.first_name|slice:":1" }}{{doctor.user.last_name|slice:":1" }}
+      </span>
+    </div>
+
+    <h3 class="font-bold text-foreground text-lg">
+      Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}
+    </h3>
+
+    <p class="text-primary text-sm font-medium mb-1">{{ doctor.specialty }}</p>
+
+    <p class="text-muted-foreground text-xs mb-1">{{ doctor.clinic.name }}</p>
+
+    <p class="text-muted-foreground text-xs mb-4">
+      {{ doctor.clinic.section.name }}
+    </p>
+
+    <button
+      type="button"
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full open-booking-modal"
+      data-doctor-id="{{ doctor.id }}"
+      data-doctor-name="Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}"
+      data-doctor-specialty="{{ doctor.specialty }}"
+      data-doctor-clinic="{{ doctor.clinic.name }}"
+    >
+      Book Appointment
+    </button>
+  </div>
+  {% empty %}
+  <div class="col-span-3 text-center py-5">
+    <h4>No doctors found.</h4>
+  </div>
+  {% endfor %}
+</div>
+
+<div
+  class="max-w-5xl mx-auto mt-8 d-flex justify-content-center align-items-center gap-2 flex-wrap"
+>
+  {% if page_obj.has_previous %}
+  <button
+    class="btn btn-outline-primary ajax-page-btn"
+    data-page="{{ page_obj.previous_page_number }}"
+  >
+    Previous
+  </button>
+  {% endif %}
+
+  <span class="btn btn-light disabled">
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+  </span>
+
+  {% if page_obj.has_next %}
+  <button
+    class="btn btn-outline-primary ajax-page-btn"
+    data-page="{{ page_obj.next_page_number }}"
+  >
+    Next
+  </button>
+  {% endif %}
+</div>

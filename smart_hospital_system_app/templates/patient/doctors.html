@@ -1,19 +1,28 @@
-{% extends "patient/base.html" %}
-{% block title %}
-Doctors 
-{%endblock%} 
+{% extends "patient/base.html" %} 
+{% block title %} Doctors 
+{% endblock %} 
 {% block extra_css %} 
 {% load static %}
-<script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="{% static 'css/patient/doctors.css' %}" />
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<script src="https://cdn.tailwindcss.com"></script>
+{% endblock %} 
+{% block modal %} 
+{% include 'patient/partials/booking_modal.html' %} 
 {% endblock %} 
 {% block content %}
-<div class="pt-28 pb-20 container mx-auto px-4 md:px-8">
+
+<main class="pt-28 pb-20 container mx-auto px-4 md:px-8 d-block">
+  {% include 'patient/partials/booking_modal.html' %} 
   <div class="text-center max-w-2xl mx-auto mb-14">
     <span
       class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase bg-accent text-accent-foreground mb-4"
-      >Our Doctors</span
     >
+      Our Doctors
+    </span>
     <h1 class="text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
       Meet Our Specialists
     </h1>
@@ -22,140 +31,208 @@ Doctors
       best possible care.
     </p>
   </div>
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto"
-  >
+
+  <div class="max-w-5xl mx-auto bg-[#D6DCE3] p-4 rounded-lg mb-10">
     <div
-      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+      class="form-inline w-100 d-flex gap-3 justify-content-around flex-wrap"
     >
-      <div
-        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
-      >
-        <span class="text-2xl font-bold text-primary">SM</span>
+      <div>
+        <label for="sectionSelect" class="form-label font-medium"
+          >Sections</label
+        >
+        <select id="sectionSelect" class="form-select">
+          <option value="">Choose a section</option>
+          {% for section in sections %}
+          <option value="{{ section.id }}">{{ section.name }}</option>
+          {% endfor %}
+        </select>
       </div>
-      <h3 class="font-bold text-foreground text-lg">Dr. Sarah Mitchell</h3>
-      <p class="text-primary text-sm font-medium mb-1">Cardiologist</p>
-      <p class="text-muted-foreground text-xs mb-4">15+ years experience</p>
-      <div class="flex items-center justify-center gap-2 mb-4">
-        <span class="w-2 h-2 rounded-full bg-secondary"></span
-        ><span class="text-xs text-muted-foreground">Available</span>
+
+      <div>
+        <label for="clinicSelect" class="form-label font-medium">Clinics</label>
+        <select id="clinicSelect" class="form-select">
+          <option value="">Choose a clinic</option>
+          {% for clinic in clinics %}
+          <option value="{{ clinic.id }}">{{ clinic.name }}</option>
+          {% endfor %}
+        </select>
       </div>
-      <a
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
-        href="/book"
-        >Book Appointment</a
-      >
-    </div>
-    <div
-      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
-    >
-      <div
-        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
-      >
-        <span class="text-2xl font-bold text-primary">JC</span>
+
+      <div>
+        <label for="searchInput" class="form-label font-medium">Search</label>
+        <input
+          id="searchInput"
+          class="form-control"
+          type="search"
+          placeholder="Search doctor, specialty, clinic"
+        />
       </div>
-      <h3 class="font-bold text-foreground text-lg">Dr. James Chen</h3>
-      <p class="text-primary text-sm font-medium mb-1">Neurologist</p>
-      <p class="text-muted-foreground text-xs mb-4">12+ years experience</p>
-      <div class="flex items-center justify-center gap-2 mb-4">
-        <span class="w-2 h-2 rounded-full bg-secondary"></span
-        ><span class="text-xs text-muted-foreground">Available</span>
-      </div>
-      <a
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
-        href="/book"
-        >Book Appointment</a
-      >
-    </div>
-    <div
-      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
-    >
-      <div
-        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
-      >
-        <span class="text-2xl font-bold text-primary">AO</span>
-      </div>
-      <h3 class="font-bold text-foreground text-lg">Dr. Amara Osei</h3>
-      <p class="text-primary text-sm font-medium mb-1">Orthopedic Surgeon</p>
-      <p class="text-muted-foreground text-xs mb-4">18+ years experience</p>
-      <div class="flex items-center justify-center gap-2 mb-4">
-        <span class="w-2 h-2 rounded-full bg-muted-foreground"></span
-        ><span class="text-xs text-muted-foreground">Unavailable</span>
-      </div>
-      <a
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
-        disabled=""
-        href="/book"
-        >Book Appointment</a
-      >
-    </div>
-    <div
-      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
-    >
-      <div
-        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
-      >
-        <span class="text-2xl font-bold text-primary">PS</span>
-      </div>
-      <h3 class="font-bold text-foreground text-lg">Dr. Priya Sharma</h3>
-      <p class="text-primary text-sm font-medium mb-1">Pediatrician</p>
-      <p class="text-muted-foreground text-xs mb-4">10+ years experience</p>
-      <div class="flex items-center justify-center gap-2 mb-4">
-        <span class="w-2 h-2 rounded-full bg-secondary"></span
-        ><span class="text-xs text-muted-foreground">Available</span>
-      </div>
-      <a
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
-        href="/book"
-        >Book Appointment</a
-      >
-    </div>
-    <div
-      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
-    >
-      <div
-        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
-      >
-        <span class="text-2xl font-bold text-primary">MT</span>
-      </div>
-      <h3 class="font-bold text-foreground text-lg">Dr. Michael Torres</h3>
-      <p class="text-primary text-sm font-medium mb-1">Ophthalmologist</p>
-      <p class="text-muted-foreground text-xs mb-4">14+ years experience</p>
-      <div class="flex items-center justify-center gap-2 mb-4">
-        <span class="w-2 h-2 rounded-full bg-secondary"></span
-        ><span class="text-xs text-muted-foreground">Available</span>
-      </div>
-      <a
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
-        href="/book"
-        >Book Appointment</a
-      >
-    </div>
-    <div
-      class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
-    >
-      <div
-        class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
-      >
-        <span class="text-2xl font-bold text-primary">FA</span>
-      </div>
-      <h3 class="font-bold text-foreground text-lg">Dr. Fatima Al-Rashid</h3>
-      <p class="text-primary text-sm font-medium mb-1">General Physician</p>
-      <p class="text-muted-foreground text-xs mb-4">20+ years experience</p>
-      <div class="flex items-center justify-center gap-2 mb-4">
-        <span class="w-2 h-2 rounded-full bg-secondary"></span
-        ><span class="text-xs text-muted-foreground">Available</span>
-      </div>
-      <a
-        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 w-full"
-        href="/book"
-        >Book Appointment</a
-      >
     </div>
   </div>
-</div>
-{% endblock %} 
-{% block extra_js %} 
-{% load static %}
+
+  <div id="doctorsContainer">
+    {% include 'patient/partials/doctors_cards.html' %}
+  </div>
+</main>
+{% endblock %} {% block extra_js %} {% load static %}
+<script>
+  const sectionSelect = document.getElementById("sectionSelect");
+  const clinicSelect = document.getElementById("clinicSelect");
+  const searchInput = document.getElementById("searchInput");
+  const doctorsContainer = document.getElementById("doctorsContainer");
+
+  let currentPage = 1;
+
+  function updateClinicOptions(clinics, selectedClinic = "") {
+    clinicSelect.innerHTML = '<option value="">Choose a clinic</option>';
+
+    clinics.forEach((clinic) => {
+      const option = document.createElement("option");
+      option.value = clinic.id;
+      option.textContent = clinic.name;
+
+      if (String(clinic.id) === String(selectedClinic)) {
+        option.selected = true;
+      }
+
+      clinicSelect.appendChild(option);
+    });
+  }
+
+  function loadDoctors(page = 1, keepClinic = false) {
+    const section = sectionSelect.value;
+    const clinic = clinicSelect.value;
+    const search = searchInput.value;
+
+    const params = new URLSearchParams({
+      section: section,
+      clinic: clinic,
+      search: search,
+      page: page,
+    });
+
+    fetch(`/doctors/filter/?${params.toString()}`, {
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        doctorsContainer.innerHTML = data.doctors_html;
+
+        if (!keepClinic) {
+          updateClinicOptions(data.clinics);
+        }
+
+        attachPaginationEvents();
+      })
+      .catch((error) => {
+        console.error("Error loading doctors:", error);
+      });
+  }
+
+  function attachPaginationEvents() {
+    document.querySelectorAll(".ajax-page-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        const page = this.dataset.page;
+        loadDoctors(page, true);
+      });
+    });
+  }
+
+  sectionSelect.addEventListener("change", function () {
+    currentPage = 1;
+    clinicSelect.value = "";
+    loadDoctors(1, false);
+  });
+
+  clinicSelect.addEventListener("change", function () {
+    currentPage = 1;
+    loadDoctors(1, true);
+  });
+
+  let searchTimeout;
+  searchInput.addEventListener("input", function () {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      currentPage = 1;
+      loadDoctors(1, true);
+    }, 400);
+  });
+
+  attachPaginationEvents();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const bookingModalElement = document.getElementById('bookingModal');
+  const bookingModal = new bootstrap.Modal(bookingModalElement);
+
+  const doctorNameElement = document.getElementById('doctorName');
+  const doctorClinicElement = document.getElementById('doctorClinic');
+  const doctorIdInput = document.getElementById('doctorIdInput');
+  const selectedTimeInput = document.getElementById('selectedTimeInput');
+  const timeSlotsContainer = document.getElementById('timeSlots');
+  const dateInput = document.getElementById('date');
+
+  function generateTimeSlots() {
+    const slots = [
+      '09:00 AM',
+      '10:00 AM',
+      '11:00 AM',
+      '12:00 PM',
+      '01:00 PM',
+      '02:00 PM',
+      '03:00 PM',
+      '04:00 PM'
+    ];
+
+    timeSlotsContainer.innerHTML = '';
+    selectedTimeInput.value = '';
+
+    slots.forEach(slot => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'btn btn-outline-primary time-slot-btn';
+      button.textContent = slot;
+      button.dataset.time = slot;
+
+      button.addEventListener('click', function () {
+        document.querySelectorAll('.time-slot-btn').forEach(btn => {
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-outline-primary');
+        });
+
+        this.classList.remove('btn-outline-primary');
+        this.classList.add('btn-primary');
+        selectedTimeInput.value = this.dataset.time;
+      });
+
+      timeSlotsContainer.appendChild(button);
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    const button = e.target.closest('.open-booking-modal');
+    if (!button) return;
+
+    const doctorId = button.dataset.doctorId;
+    const doctorName = button.dataset.doctorName;
+    const doctorSpecialty = button.dataset.doctorSpecialty;
+    const doctorClinic = button.dataset.doctorClinic;
+
+    doctorIdInput.value = doctorId;
+    doctorNameElement.textContent = `${doctorName} - ${doctorSpecialty}`;
+    doctorClinicElement.textContent = doctorClinic;
+
+    generateTimeSlots();
+    bookingModal.show();
+  });
+
+  dateInput.addEventListener('change', function () {
+    generateTimeSlots();
+  });
+</script>
+
 <script src="{% static 'js/index.js' %}"></script>
+
 {% endblock %}
