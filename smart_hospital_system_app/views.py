@@ -1,11 +1,12 @@
 import email
 
 from datetime import datetime
+
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import User, Patient, Doctor, Section,Clinic, MedicalRecord, Appointment
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login as auth_login, logout
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Section, Clinic, Doctor
@@ -25,6 +26,9 @@ def login(request):
         else:
             user = User.objects.filter(email=request.POST.get('email')).first()     
             auth_login(request, user)
+            is_doctor = hasattr(user, 'doctor')
+            if is_doctor:
+                return redirect('/doctor/dashboard/')
             return redirect("/")
     return render(request, 'account/login.html')
 
@@ -40,6 +44,10 @@ def register(request):
             Patient.objects.create_patient(request.POST)
             return redirect('/login/')
     return render(request, 'account/register.html')
+
+def signout(request):
+    logout(request)
+    return redirect('/login/')
 
 def doctors(request):
     sections = Section.objects.all().order_by('name')
@@ -110,15 +118,11 @@ def create_appointment(request):
     if request.method == 'POST':
         doctor_id = request.POST.get('doctor_id')
         date_str = request.POST.get('date')
-        time_str = request.POST.get('selected_time')
 
         doctor = get_object_or_404(Doctor, id=doctor_id)
         patient = get_object_or_404(Patient, user=request.user)
 
-        appointment_datetime = datetime.strptime(
-            f"{date_str} {time_str}",
-            "%Y-%m-%d %I:%M %p"
-        )
+        appointment_date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
         notes = request.POST.get('notes', '')
 
@@ -126,7 +130,7 @@ def create_appointment(request):
             patient=patient,
             doctor=doctor,
             clinic=doctor.clinic,
-            appointment_date=appointment_datetime,
+            appointment_date=appointment_date,
             notes=notes
         )
 
@@ -149,3 +153,84 @@ def book(request):
         # Handle booking logic here
         pass
     return render(request, 'patient/booking.html')
+
+def doctor_dashboard(request):
+    doctor = get_object_or_404(Doctor, user=request.user)
+    print(doctor)
+    appointments = Appointment.objects.filter(doctor=doctor)
+    print(appointments)
+    if appointments is not None:
+        context = {
+            "appointments": appointments[:5],
+            "today_count": appointments.filter(appointment_date__date=datetime.today()).count(),
+            "patients_count": Patient.objects.count(),
+            "pending_count": appointments.filter(status='pending').count(),
+            "confirmed_count": appointments.filter(status='confirmed').count(),
+            "cancelled_count": appointments.filter(status='cancelled').count(),
+        }
+
+        return render(request, "doctor/index.html", context=context)
+    else:
+        context = {
+            "appointments": [],
+            "today_count": 0,
+            "patients_count": Patient.objects.count(),
+            "pending_count": 0,
+            "confirmed_count": 0,
+            "cancelled_count": 0,
+        }
+        return render(request, "doctor/index.html", context=context)
+
+
+# ------------------ Appointments ------------------
+def doctor_appointments(request):
+    doctor = request.user.doctor
+    appointments = Appointment.objects.filter(doctor=doctor)
+
+    return render(request, "doctor/appointments.html", {
+        "appointments": appointments
+    })
+
+
+# ------------------ Accept Appointment ------------------
+def accept_appointment(request, id):
+    appointment = get_object_or_404(Appointment, id=id)
+    appointment.status = "confirmed"
+    appointment.save()
+    return redirect("doctor_dashboard")
+
+
+# ------------------ Cancel Appointment ------------------
+def cancel_appointment(request, id):
+    appointment = get_object_or_404(Appointment, id=id)
+    appointment.status = "cancelled"
+    appointment.save()
+    return redirect("doctor_dashboard")
+
+
+# ------------------ Patients ------------------
+def doctor_patients(request):
+    doctor = request.user.doctor
+    patients = Patient.objects.filter(appointments__doctor=doctor).distinct()
+
+    return render(request, "doctor/patients.html", {
+        "patients": patients
+    })
+
+
+# ------------------ Patient Detail ------------------
+def patient_detail(request, id):
+    patient = get_object_or_404(Patient, id=id)
+    appointments = Appointment.objects.filter(patient=patient)
+
+    if request.method == "POST":
+        Note.objects.create(
+            doctor=request.user.doctor,
+            patient=patient,
+            content=request.POST.get("note")
+        )
+
+    return render(request, "doctor/patient_detail.html", {
+        "patient": patient,
+        "appointments": appointments
+    })
