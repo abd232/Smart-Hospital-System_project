@@ -1,17 +1,128 @@
-{% extends "base.html" %} 
+{% extends "doctor/base.html" %} 
 {% block title %} 
-Smart Hospital System 
-{%endblock%} 
+Doctor Dashboard 
+{% endblock %} 
 {% block extra_css %} 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+<link rel="stylesheet" href="{% static 'css/doctor/index.css' %}" />
+<link
+  href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css"
+  rel="stylesheet"
+/>
 {% endblock %} 
 {% block content %}
-<main>
-  <h1>Welcome to the Smart Hospital System</h1>
-</main>
+
+<div class="dashboard">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>SmartCare</h2>
+    <ul>
+      <li class="active">Dashboard</li>
+      <li><a href="{% url 'appointments' %}">Appointments</a></li>
+      <li><a href="{% url 'patients' %}">Patients</a></li>
+      <li>Availability</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <h1>Welcome, Dr. {{ request.user.first_name }}</h1>
+
+      <div class="topbar-right">
+        <div class="notification">
+          🔔 <span class="badge">{{ pending_count|default:0 }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div class="card">
+        <h3>Today's Appointments</h3>
+        <p>{{ today_count|default:0 }}</p>
+      </div>
+      <div class="card">
+        <h3>Total Patients</h3>
+        <p>{{ patients_count|default:0 }}</p>
+      </div>
+      <div class="card">
+        <h3>Pending</h3>
+        <p>{{ pending_count|default:0 }}</p>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search patient..."
+      class="search"
+    />
+
+    <!-- Table -->
+    <div class="table-container">
+      <h2>Appointments</h2>
+
+      <table id="appointmentsTable">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% if appointments %} {% for appointment in appointments %}
+          <tr>
+            <td>{{ appointment.patient.user.first_name }}</td>
+            <td>{{ appointment.appointment_date|date:"Y-m-d" }}</td>
+            <td>{{ appointment.appointment_date|time:"H:i" }}</td>
+
+            <td class="status {{ appointment.status }}">
+              {{ appointment.status }}
+            </td>
+
+            <td>
+              <a
+                href="{% url 'accept_appointment' appointment.id %}"
+                class="btn accept"
+                >✔</a
+              >
+              <a
+                href="{% url 'cancel_appointment' appointment.id %}"
+                class="btn cancel"
+                >✖</a
+              >
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">No appointments found</td>
+          </tr>
+          {% endfor %} {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-box">
+      <canvas id="appointmentsChart"></canvas>
+    </div>
+
+    <!-- Calendar -->
+    <div id="calendar"></div>
+  </main>
+</div>
+
 {% endblock %} 
 {% block extra_js %}
-{% load static %}
-<script src="{% static 'js/index.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
 {% endblock %}
