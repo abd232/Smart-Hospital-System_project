@@ -69,16 +69,6 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.user.username
-    
-class Doctor(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    specialty = models.CharField(max_length=100)
-    description = models.TextField()
-    updated_at = models.DateTimeField(auto_now=True)
-    Clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE) # type: ignore
-
-    def __str__(self):
-        return self.user.username
 
     
 class Section(models.Model):
@@ -97,7 +87,16 @@ class Clinic(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE , related_name='clinics')
     def __str__(self):
         return self.name
-    
+
+class Doctor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    specialty = models.CharField(max_length=100)
+    description = models.TextField()
+    updated_at = models.DateTimeField(auto_now=True)
+    clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)# type: ignore
+
+    def __str__(self):
+        return self.user.username
 
 class Appointment(models.Model):
     STATUS_CHOICES = (

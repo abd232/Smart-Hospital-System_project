@@ -165,7 +165,7 @@ def book(request):
 
 # ------------------ Dashboard ------------------
 def doctor_dashboard(request):
-    doctor = request.user.doctor
+    doctor = Doctor.objects.filter(user=request.user).first()
 
     appointments = Appointment.objects.filter(doctor=doctor)
 
@@ -183,7 +183,7 @@ def doctor_dashboard(request):
 
 # ------------------ Appointments ------------------
 def doctor_appointments(request):
-    doctor = request.user.doctor
+    doctor = Doctor.objects.filter(user=request.user).first()
     appointments = Appointment.objects.filter(doctor=doctor)
 
     return render(request, "doctor/appointments.html", {
@@ -209,7 +209,7 @@ def cancel_appointment(request, id):
 
 # ------------------ Patients ------------------
 def doctor_patients(request):
-    doctor = request.user.doctor
+    doctor = Doctor.objects.filter(user=request.user).first()
     patients = Patient.objects.filter(appointments__doctor=doctor).distinct()
 
     return render(request, "doctor/patients.html", {
@@ -224,7 +224,7 @@ def patient_detail(request, id):
 
     if request.method == "POST":
         Note.objects.create(
-            doctor=request.user.doctor,
+            doctor=Doctor.objects.filter(user=request.user).first(),
             patient=patient,
             content=request.POST.get("note")
         )
