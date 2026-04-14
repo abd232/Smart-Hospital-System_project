@@ -45,6 +45,9 @@ def ai(request):
     # Implement AI-related logic here
     return render(request, 'patient/ai.html')
 
+def about_us(request):
+    return render(request, 'patient/about_us.html')
+
 def book(request):
     if request.method == 'POST':
         # Handle booking logic here
