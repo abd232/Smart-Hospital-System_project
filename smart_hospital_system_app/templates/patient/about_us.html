@@ -1,0 +1,85 @@
+{% extends "patient/base.html" %} 
+{% block title %} 
+About Us 
+{%endblock%} 
+{% block extra_css%}
+<script src="https://cdn.tailwindcss.com"></script>
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+/>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/patient/about_us.css' %}" />
+{% endblock %} 
+{% block content %}
+<main class="d-block">
+  <div class="container d-block py-5 text-center">
+    <h1 class="fw-bold">Smart Hospital System</h1>
+    <p class="subtitle mb-5">
+      Redefining healthcare through technology and compassion
+    </p>
+
+    <div class="story-section">
+      <div class="row align-items-center text-start">
+        <div class="col-md-6 mb-4">
+          <img
+            src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289"
+            class="img-fluid shadow"
+          />
+        </div>
+
+        <div class="col-md-6 story-text">
+          <h3>Our Story</h3>
+          <p>
+            We aim to make healthcare easier and faster using modern technology
+            with top medical professionals. Our system ensures a smooth and
+            reliable experience for every patient.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-md-3">
+        <div class="value-card text-center">
+          <i class="bi bi-heart-pulse fs-1 text-primary mb-3"></i>
+          <h5>Compassion</h5>
+          <p class="small text-muted">Deeply care about every patient.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="value-card text-center">
+          <i class="bi bi-award fs-1 text-primary mb-3"></i>
+          <h5>Excellence</h5>
+          <p class="small text-muted">Top-quality healthcare services.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="value-card text-center">
+          <i class="bi bi-people fs-1 text-primary mb-3"></i>
+          <h5>Teamwork</h5>
+          <p class="small text-muted">Working together for better outcomes.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="value-card text-center">
+          <i class="bi bi-lightbulb fs-1 text-primary mb-3"></i>
+          <h5>Innovation</h5>
+          <p class="small text-muted">Using technology to improve care.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %} 
+{% block extra_js %} 
+{% load static %}
+<script src="{% static 'js/about_us.js' %}"></script>
+{% endblock %}
