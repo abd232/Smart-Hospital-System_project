@@ -10,6 +10,8 @@ urlpatterns = [
     path('doctors/', views.doctors, name='doctors'),
     path('doctors/filter/', views.doctors_filter_ajax, name='doctors_filter_ajax'),
     path('appointments/create/', views.create_appointment, name='create_appointment'),
+    path('about-us/', views.about_us, name='about_us'),
+    path('contact-us/', views.contact_us, name='contact_us'),
     path('ai/', views.ai, name='ai'),
     path('book/', views.book, name='book'),
 ]

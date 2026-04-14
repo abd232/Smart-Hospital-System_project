@@ -1,0 +1,50 @@
+main {
+  font-family: Arial, sans-serif;
+  padding-bottom: 500px;
+}
+
+h1 {
+  color: #0d3b66;
+  font-size: 2.5rem !important;
+}
+
+.subtitle {
+  color: #355070;
+}
+
+.info-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  color: #0d3b66;
+}
+
+.info-card p {
+  margin: 47px 0;
+}
+
+.form-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.form-card:hover {
+  transform: translateY(-5px);
+}
+
+.form-control {
+  border-radius: 10px;
+}
+
+.btn-info {
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.text-muted {
+  color: #355070 !important;
+}
