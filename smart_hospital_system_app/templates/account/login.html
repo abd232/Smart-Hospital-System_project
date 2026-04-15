@@ -28,10 +28,6 @@ login {%endblock%}
       <h2 class="text-center fw-bold">Hospital Login</h2>
       <p class="text-center subtitle">Login to your account</p>
 
-      {% if errors %}
-      <div class="alert alert-danger">{{ errors.login }}</div>
-      {% endif %}
-
       <form method="POST" action="/login/">
         {% csrf_token %}
         <div class="input-group">

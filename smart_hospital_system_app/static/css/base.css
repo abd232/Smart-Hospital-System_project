@@ -118,3 +118,18 @@ main {
     display: block;
   }
 }
+
+.btn-main {
+  background: linear-gradient(90deg, #3d74a1, #328cc1);
+  border: none;
+  color: white !important;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-main:hover {
+  background: linear-gradient(90deg, #2a6799, #2a76a5);
+  transform: translateY(-2px);
+}
