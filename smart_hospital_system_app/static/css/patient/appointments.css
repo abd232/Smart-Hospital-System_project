@@ -1,0 +1,279 @@
+.patient-dashboard-container {
+  padding: 40px 30px;
+  background: #f6f8fb;
+  min-height: 100vh;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-left,
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.welcome-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 28px 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ececec;
+}
+
+.welcome-text {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.welcome-card h1 {
+  font-size: 38px;
+  color: #111827;
+  margin: 0;
+  font-weight: 700;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+  border: 1px solid #ececec;
+}
+
+.card-header {
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.blue-header {
+  background: linear-gradient(135deg, #2f6db5, #4d8fd8);
+  color: white;
+}
+
+.soft-blue-header {
+  background: linear-gradient(135deg, #dbeafe, #bcd5f6);
+  color: #1f2937;
+}
+
+.light-header {
+  background: #f8f8f8;
+  color: #1f2937;
+  border-bottom: 1px solid #ececec;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-title h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.card-icon {
+  font-size: 24px;
+}
+
+.header-btn {
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: white;
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: 0.25s ease;
+}
+
+.header-btn:hover {
+  transform: translateY(-2px);
+}
+
+.light-btn {
+  background: #ffffff;
+  color: #111827;
+}
+
+.small-btn {
+  padding: 8px 16px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.appointment-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.appointment-card:last-child {
+  margin-bottom: 0;
+}
+
+.doctor-image img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.appointment-info {
+  flex: 1;
+}
+
+.appointment-info h3 {
+  margin: 0 0 8px;
+  font-size: 26px;
+  color: #111827;
+}
+
+.appointment-info p {
+  margin: 5px 0;
+  color: #4b5563;
+  font-size: 17px;
+}
+
+.appointment-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-badge.confirmed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.canceled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.pending-body {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pending-item {
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.pending-item h3 {
+  margin: 0 0 8px;
+  font-size: 21px;
+  color: #111827;
+}
+
+.pending-item p {
+  margin: 4px 0;
+  color: #4b5563;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.empty-icon {
+  font-size: 54px;
+  margin-bottom: 12px;
+}
+
+.canceled-item {
+  opacity: 0.96;
+}
+
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-right {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .patient-dashboard-container {
+    padding: 20px 14px;
+  }
+
+  .welcome-card h1 {
+    font-size: 30px;
+  }
+
+  .card-title h2 {
+    font-size: 22px;
+  }
+
+  .appointment-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .appointment-status {
+    justify-content: flex-start;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .doctor-image img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .appointment-info h3 {
+    font-size: 22px;
+  }
+
+  .appointment-info p {
+    font-size: 15px;
+  }
+}

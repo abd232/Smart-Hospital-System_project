@@ -119,6 +119,11 @@ class MedicalRecord(models.Model):
         return f"{self.patient.user.username} - {self.doctor.user.username} - {self.clinic.name} - {self.created_at}"
 
 class Appointment(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('cancelled', 'Cancelled'),
+    )
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE , related_name='appointments')
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE , related_name='appointments')
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE , related_name='appointments')
@@ -126,7 +131,7 @@ class Appointment(models.Model):
     notes = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     def __str__(self):
         return f"{self.patient.user.username} - {self.doctor.user.username} - {self.clinic.name} - {self.appointment_date}"
     
@@ -149,3 +154,4 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['specialization', 'phone', 'experience', 'location', 'image']
+    
