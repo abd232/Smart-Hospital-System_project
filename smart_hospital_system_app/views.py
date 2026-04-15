@@ -255,6 +255,8 @@ def patient_detail(request, id):
     })
 
 def patient_appointments(request):
+    if not hasattr(request.user, 'patient'):
+        return redirect('login')
     patient = Patient.objects.get(user=request.user)
 
     scheduled_appointments = Appointment.objects.filter(
