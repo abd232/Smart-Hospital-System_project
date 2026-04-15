@@ -1,0 +1,72 @@
+{% extends "doctor/base.html" %}
+
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<div class="dashboard">
+    <aside class="sidebar">
+    <h2>SmartCare</h2>
+    <ul>
+      <li class="active">Dashboard</li>
+      <li><a href="{% url 'appointments' %}">Appointments</a></li>
+      <li><a href="{% url 'patients' %}">Patients</a></li>
+      <li><a href="{% url 'doctor_availability' %}">Availability</a></li>
+    </ul>
+  </aside>
+  <div class="main">
+    <div class="section-title">Appointments</div>
+
+    <form method="GET" class="filter-row">
+    <input
+        type="text"
+        name="search"
+        value="{{ search }}"
+        class="search-bar"
+        placeholder="Search patient or clinic..."
+    />
+
+    <select name="status">
+        <option value="">All Status</option>
+        <option value="pending" {% if status == 'pending' %}selected{% endif %}>Pending</option>
+        <option value="confirmed" {% if status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+        <option value="cancelled" {% if status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+        <option value="completed" {% if status == 'completed' %}selected{% endif %}>Completed</option>
+    </select>
+
+    <button type="submit" class="action-btn accept" style="width:auto; padding: 0 18px;">Go</button>
+    </form>
+
+    <div class="table-wrap">
+    <table class="dashboard-table">
+        <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Clinic</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+            <td>{{ appointment.clinic.name }}</td>
+            <td>{{ appointment.appointment_date|date:"Y-m-d" }}</td>
+            <td>{{ appointment.appointment_date|time:"H:i" }}</td>
+            <td>
+            <span class="badge {{ appointment.status|default:'pending' }}">
+                {{ appointment.status|default:"pending"|capfirst }}
+            </span>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No appointments found.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

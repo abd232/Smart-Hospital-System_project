@@ -143,6 +143,37 @@ def create_appointment(request):
 
     return redirect('doctors')
 
+def create_appointment(request):
+    if request.method == 'POST':
+        doctor_id = request.POST.get('doctor_id')
+        date_str = request.POST.get('date')
+        time_str = request.POST.get('selected_time')
+        notes = request.POST.get('notes', '')
+
+        doctor = get_object_or_404(Doctor, id=doctor_id)
+        patient = get_object_or_404(Patient, user=request.user)
+
+        if not date_str or not time_str:
+            return redirect('doctors')
+
+        # combine date + time
+        appointment_datetime = datetime.strptime(
+            f"{date_str} {time_str}",
+            "%Y-%m-%d %I:%M %p"
+        )
+
+        Appointment.objects.create(
+            patient=patient,
+            doctor=doctor,
+            clinic=doctor.clinic,
+            appointment_date=appointment_datetime,
+            notes=notes
+        )
+
+        return redirect('doctors')
+
+    return redirect('doctors')
+
 def ai(request):
     # Implement AI-related logic here
     if not hasattr(request.user, 'patient'):
@@ -162,7 +193,7 @@ def book(request):
     return render(request, 'patient/booking.html')
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'doctor/profile.html')
 @login_required
 def edit_profile(request):
     profile = request.user.profile
@@ -205,16 +236,74 @@ def doctor_dashboard(request):
         return render(request, "doctor/index.html", context=context)
 
 
-# ------------------ Appointments ------------------
+@login_required
 def doctor_appointments(request):
-    doctor = request.user.doctor
-    appointments = Appointment.objects.filter(doctor=doctor)
+    doctor = get_object_or_404(Doctor, user=request.user)
 
-    return render(request, "doctor/appointments.html", {
-        "appointments": appointments
-    })
+    appointments = Appointment.objects.filter(doctor=doctor).select_related(
+        'patient__user', 'clinic'
+    ).order_by('appointment_date')
+
+    search = request.GET.get('search', '').strip()
+    status = request.GET.get('status', '').strip()
+
+    if search:
+        appointments = appointments.filter(
+            Q(patient__user__first_name__icontains=search) |
+            Q(patient__user__last_name__icontains=search) |
+            Q(clinic__name__icontains=search)
+        )
+
+    if status and hasattr(Appointment, 'status'):
+        appointments = appointments.filter(status=status)
+
+    context = {
+        'doctor': doctor,
+        'appointments': appointments,
+        'search': search,
+        'status': status,
+        'active_page': 'appointments',
+    }
+    return render(request, 'doctor/appointments.html', context)
 
 
+@login_required
+def doctor_patients(request):
+    doctor = get_object_or_404(Doctor, user=request.user)
+
+    patients = Patient.objects.filter(
+        appointments__doctor=doctor
+    ).select_related('user').distinct()
+
+    search = request.GET.get('search', '').strip()
+
+    if search:
+        patients = patients.filter(
+            Q(user__first_name__icontains=search) |
+            Q(user__last_name__icontains=search) |
+            Q(user__email__icontains=search) |
+            Q(phone__icontains=search)
+        )
+
+    context = {
+        'doctor': doctor,
+        'patients': patients,
+        'search': search,
+        'active_page': 'patients',
+    }
+    return render(request, 'doctor/patients.html', context)
+
+
+@login_required
+def doctor_availability(request):
+    doctor = get_object_or_404(Doctor, user=request.user)
+
+    # temporary placeholder page until you create actual availability model
+    context = {
+        'doctor': doctor,
+        'active_page': 'availability',
+    }
+    return render(request, 'doctor/availability.html', context)
 # ------------------ Accept Appointment ------------------
 def accept_appointment(request, id):
     appointment = get_object_or_404(Appointment, id=id)

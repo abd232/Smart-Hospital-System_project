@@ -1,73 +1,57 @@
-{% load static %}
+{% extends "doctor/base.html" %} 
+{% block title %}
+Patients 
+{% endblock %} 
+{% block content %}
+<div class="profile-container">
+  <div class="profile-card">
+    <!-- LEFT SIDE -->
+    <div class="profile-left">
+      {% if user.image %}
+      <img src="{{ user.profile.image.url }}" alt="Doctor Image" />
+      {% else %}
+      <img src="https://img.freepik.com/free-photo/doctor-with-his-arms-crossed-white-background_1368-5790.jpg" alt="Doctor Image" />
+      {% endif %}
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Doctor Profile</title>
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
-  </head>
-  <body>
-    <div class="profile-container">
-      <div class="profile-card">
-        <!-- LEFT SIDE -->
-        <div class="profile-left">
-          {% if user.profile.image %}
-          <img src="{{ user.profile.image.url }}" alt="Doctor Image" />
-          {% else %}
-          <img src="{% static 'images/doctor.png' %}" alt="Doctor Image" />
-          {% endif %}
+      <h2>Dr. {{ user.get_full_name|default:user.username }}</h2>
+      <p class="role">Doctor</p>
+    </div>
 
-          <h2>Dr. {{ user.get_full_name|default:user.username }}</h2>
-          <p class="role">Doctor</p>
-        </div>
+    <!-- RIGHT SIDE -->
+    <div class="profile-right">
+      <h3>Profile Information</h3>
 
-        <!-- RIGHT SIDE -->
-        <div class="profile-right">
-          <h3>Profile Information</h3>
+      <div class="info">
+        <span>Username:</span>
+        <p>{{ user.username }}</p>
+      </div>
 
-          <div class="info">
-            <span>Username:</span>
-            <p>{{ user.username }}</p>
-          </div>
+      <div class="info">
+        <span>Email:</span>
+        <p>{{ user.email }}</p>
+      </div>
 
-          <div class="info">
-            <span>Email:</span>
-            <p>{{ user.email }}</p>
-          </div>
+      <div class="info">
+        <span>Specialization:</span>
+        <p>{{ user.specialization|default:"Not set" }}</p>
+      </div>
 
-          <div class="info">
-            <span>Specialization:</span>
-            <p>{{ user.profile.specialization|default:"Not set" }}</p>
-          </div>
+      <div class="info">
+        <span>Phone:</span>
+        <p>{{ user.phone|default:"Not set" }}</p>
+      </div>
 
-          <div class="info">
-            <span>Phone:</span>
-            <p>{{ user.profile.phone|default:"Not set" }}</p>
-          </div>
+      <!-- ACTIONS -->
+      <div class="actions">
+        <a href="#" class="btn edit">Edit Profile</a>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{ form.as_p }}
 
-          <div class="info">
-            <span>Experience:</span>
-            <p>{{ user.profile.experience|default:"Not set" }} Years</p>
-          </div>
-
-          <div class="info">
-            <span>Location:</span>
-            <p>{{ user.profile.location|default:"Not set" }}</p>
-          </div>
-
-          <!-- ACTIONS -->
-          <div class="actions">
-            <a href="#" class="btn edit">Edit Profile</a>
-            <form method="POST" enctype="multipart/form-data">
-              {% csrf_token %} {{ form.as_p }}
-
-              <button type="submit">Save Changes</button>
-            </form>
-            <a href="{% url 'logout' %}" class="btn logout">Logout</a>
-          </div>
-        </div>
+          <button type="submit">Save Changes</button>
+        </form>
+        <a href="{% url 'logout' %}" class="btn logout">Logout</a>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</div>
+{% endblock %}

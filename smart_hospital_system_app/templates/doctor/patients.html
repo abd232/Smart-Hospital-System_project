@@ -1,0 +1,45 @@
+{% extends "doctor/base.html" %}
+
+{% block title %}Patients{% endblock %}
+{% block content %}
+<div class="dashboard">
+    <aside class="sidebar">
+    <h2>SmartCare</h2>
+    <ul>
+      <li class="active">Dashboard</li>
+      <li><a href="{% url 'appointments' %}">Appointments</a></li>
+      <li><a href="{% url 'patients' %}">Patients</a></li>
+      <li><a href="{% url 'doctor_availability' %}">Availability</a></li>
+    </ul>
+  </aside>
+  <div class="main">
+    <div class="section-title">Patients</div>
+
+    <form method="GET">
+        <input
+        type="text"
+        name="search"
+        value="{{ search }}"
+        class="search-bar"
+        placeholder="Search patient name, email, or phone..."
+        />
+    </form>
+
+    <div class="patient-card-grid">
+        {% for patient in patients %}
+        <div class="patient-card">
+        <div class="patient-name">
+            {{ patient.user.first_name }} {{ patient.user.last_name }}
+        </div>
+        <div class="patient-meta"><strong>Email:</strong> {{ patient.user.email }}</div>
+        <div class="patient-meta"><strong>Phone:</strong> {{ patient.phone }}</div>
+        <div class="patient-meta"><strong>Date of Birth:</strong> {{ patient.date_of_birth }}</div>
+        <div class="patient-meta"><strong>Address:</strong> {{ patient.address }}</div>
+        </div>
+        {% empty %}
+        <p>No patients found.</p>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

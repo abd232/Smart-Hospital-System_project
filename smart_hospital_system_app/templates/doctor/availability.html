@@ -1,0 +1,54 @@
+{% extends "doctor/base.html" %}
+
+{% block title %}Availability{% endblock %}
+{% block content %}
+<div class="dashboard">
+    <aside class="sidebar">
+    <h2>SmartCare</h2>
+    <ul>
+      <li class="active">Dashboard</li>
+      <li><a href="{% url 'appointments' %}">Appointments</a></li>
+      <li><a href="{% url 'patients' %}">Patients</a></li>
+      <li><a href="{% url 'doctor_availability' %}">Availability</a></li>
+    </ul>
+  </aside>
+  <div class="main">
+    <div class="section-title">Availability</div>
+
+    <div class="availability-row">
+        <div class="av-day">Sunday</div>
+        <div class="av-time">09:00 AM - 01:00 PM</div>
+    </div>
+
+    <div class="availability-row">
+        <div class="av-day">Monday</div>
+        <div class="av-time">10:00 AM - 03:00 PM</div>
+    </div>
+
+    <div class="availability-row">
+        <div class="av-day">Tuesday</div>
+        <div class="av-time">09:00 AM - 01:00 PM</div>
+    </div>
+
+    <div class="availability-row">
+        <div class="av-day">Wednesday</div>
+        <div class="av-time">12:00 PM - 05:00 PM</div>
+    </div>
+
+    <div class="availability-row">
+        <div class="av-day">Thursday</div>
+        <div class="av-time">09:00 AM - 02:00 PM</div>
+    </div>
+
+    <div class="availability-row">
+        <div class="av-day">Friday</div>
+        <div class="av-time">Off</div>
+    </div>
+
+    <div class="availability-row">
+        <div class="av-day">Saturday</div>
+        <div class="av-time">Off</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
