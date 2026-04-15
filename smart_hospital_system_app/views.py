@@ -48,7 +48,7 @@ def register(request):
     return render(request, 'account/register.html')
 def logout_view(request):
     logout(request)
-    return redirect('index') 
+    return redirect('/login/')
 
 def signout(request):
     logout(request)
