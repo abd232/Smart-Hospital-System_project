@@ -31,13 +31,20 @@
 <li class="dropdown">
   <a href="#">Account ▾</a>
   <ul class="dropdown-menu">
+
     {% if user.is_authenticated %}
-      <li><a href="#">Profile</a></li>
-      <li><a href="#">Logout</a></li>
+
+      <!-- When doctor is LOGGED IN -->
+      <li><a href="{% url 'profile' %}">My Profile</a></li>
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+
     {% else %}
+
+      <!-- When NOT logged in -->
       <li><a href="{% url 'login' %}">Login</a></li>
-      <li><a href="{% url 'register' %}">Register</a></li>
+
     {% endif %}
+
   </ul>
 </li>
   </ul>
