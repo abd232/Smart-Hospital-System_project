@@ -35,17 +35,11 @@
             <li><a href="{% url 'contact_us' %}">Contact</a></li>
 
             <!-- Account -->
-            <li class="dropdown">
-              <a href="#">Account ▾</a>
-              <ul class="dropdown-menu">
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'profile' %}">My Profile</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
-                {% endif %}
-              </ul>
-            </li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
           </ul>
         </nav>
 
