@@ -10,7 +10,7 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     path('doctors/', views.doctors, name='doctors'),
     path('doctors/filter/', views.doctors_filter_ajax, name='doctors_filter_ajax'),
-    path('appointments/ce/reat', views.create_appointment, name='create_appointment'),
+    path('appointments/create/', views.create_appointment, name='create_appointment'),
     path('about-us/', views.about_us, name='about_us'),
     path('contact-us/', views.contact_us, name='contact_us'),
     path('ai/', views.ai, name='ai'),
@@ -19,7 +19,7 @@ urlpatterns = [
     path('doctor/dashboard/', views.doctor_dashboard, name="doctor_dashboard"),
     path('patients/', views.doctor_patients, name="patients"),
     path('patients/<int:id>/', views.patient_detail, name="patient_detail"),
-
+    path('patient/appointments/', views.patient_appointments, name="patient_appointments"),
     path('accept/<int:id>/', views.accept_appointment, name="accept_appointment"),
     path('cancel/<int:id>/', views.cancel_appointment, name="cancel_appointment"),
 ]
