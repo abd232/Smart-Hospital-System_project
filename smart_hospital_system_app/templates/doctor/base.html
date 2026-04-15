@@ -17,24 +17,32 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="nav" id="navMenu">
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Departments</a></li>
-            <li><a href="#">Doctors</a></li>
-            <li><a href="#">AI Assistant</a></li>
+<nav class="nav" id="navMenu">
+  <ul>
+    <!-- Navigation -->
+<nav class="nav" id="navMenu">
+  <ul>
+    <li><a href="{% url 'index' %}">Home</a></li>
+    <li><a href="{% url 'doctors' %}">Doctors</a></li>
+    <li><a href="{% url 'book' %}">Book Appointment</a></li>
+    <li><a href="{% url 'about_us' %}">About Us</a></li>
+    <li><a href="{% url 'contact_us' %}">Contact</a></li>
 
-            <!-- Dropdown -->
-            <li class="dropdown">
-              <a href="#">Account ▾</a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Register</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-
+<li class="dropdown">
+  <a href="#">Account ▾</a>
+  <ul class="dropdown-menu">
+    {% if user.is_authenticated %}
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">Logout</a></li>
+    {% else %}
+      <li><a href="{% url 'login' %}">Login</a></li>
+      <li><a href="{% url 'register' %}">Register</a></li>
+    {% endif %}
+  </ul>
+</li>
+  </ul>
+</nav>
+  
         <!-- Mobile Menu Button -->
         <div class="menu-toggle" id="menuToggle">☰</div>
       </div>

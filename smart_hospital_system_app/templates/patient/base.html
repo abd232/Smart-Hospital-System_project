@@ -17,19 +17,32 @@
         </div>
 
         <!-- Navigation -->
+        <!-- Patient Navigation -->
         <nav class="nav" id="navMenu">
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Departments</a></li>
-            <li><a href="#">Doctors</a></li>
-            <li><a href="#">AI Assistant</a></li>
+            <!-- Home -->
+            <li><a href="{% url 'index' %}">Home</a></li>
 
-            <!-- Dropdown -->
+            <!-- Doctors -->
+            <li><a href="{% url 'doctors' %}">Doctors</a></li>
+
+            <!-- Book Appointment (core patient feature) -->
+            <li><a href="{% url 'book' %}">Book Appointment</a></li>
+
+            <!-- Info pages -->
+            <li><a href="{% url 'about_us' %}">About Us</a></li>
+            <li><a href="{% url 'contact_us' %}">Contact</a></li>
+
+            <!-- Account -->
             <li class="dropdown">
               <a href="#">Account ▾</a>
               <ul class="dropdown-menu">
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Register</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'profile' %}">My Profile</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
               </ul>
             </li>
           </ul>
@@ -41,7 +54,6 @@
     </header>
 
     {% block content %} {% endblock %}
-
   </body>
   {% load static %}
   <script src="{% static 'js/base.js' %}"></script>

@@ -4,7 +4,11 @@ from email import errors
 import bcrypt
 from django.contrib.auth.models import User
 from django.db import models
-# Create your models here.
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django import forms
+
+
 
 class UserManager(models.Manager):
     def create_patient(self,post_data):
@@ -130,4 +134,24 @@ class Appointment(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     def __str__(self):
         return f"{self.patient.user.username} - {self.doctor.user.username} - {self.clinic.name} - {self.appointment_date}"
+    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    specialization = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    experience = models.IntegerField(blank=True, null=True)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to='profiles/', blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
+@receiver(post_save, sender=User) 
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['specialization', 'phone', 'experience', 'location', 'image']
     
