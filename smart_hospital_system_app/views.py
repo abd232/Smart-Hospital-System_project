@@ -234,3 +234,28 @@ def patient_detail(request, id):
         "patient": patient,
         "appointments": appointments
     })
+
+def patient_appointments(request):
+    patient = Patient.objects.get(user=request.user)
+
+    scheduled_appointments = Appointment.objects.filter(
+        patient=patient,
+        status='confirmed'
+    ).order_by('appointment_date')
+
+    pending_appointments = Appointment.objects.filter(
+        patient=patient,
+        status='pending'
+    ).order_by('appointment_date')
+
+    cancelled_appointments = Appointment.objects.filter(
+        patient=patient,
+        status='cancelled'
+    ).order_by('-appointment_date')
+
+    context = {
+        'scheduled_appointments': scheduled_appointments,
+        'pending_appointments': pending_appointments,
+        'cancelled_appointments': cancelled_appointments,
+    }
+    return render(request, 'patient/appointments.html', context)

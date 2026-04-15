@@ -1,0 +1,146 @@
+{% extends "patient/base.html" %}
+{% block title %}
+Patient appointments
+{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/patient/appointments.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="patient-dashboard-container">
+  <div class="dashboard-grid">
+
+    <!-- Left Side -->
+    <div class="dashboard-left">
+
+      <!-- Welcome Card -->
+      <section class="welcome-card">
+        <div>
+          <p class="welcome-text">Welcome,</p>
+          <h1>{{ request.user.first_name }} 👋</h1>
+        </div>
+      </section>
+
+      <!-- Scheduled Appointments -->
+      <section class="dashboard-card scheduled-card">
+        <div class="card-header blue-header">
+          <div class="card-title">
+            <span class="card-icon">📅</span>
+            <h2>Scheduled Appointments</h2>
+          </div>
+          <a href="{% url 'doctors' %}" class="header-btn">Book Appointment</a>
+        </div>
+
+        <div class="card-body">
+          {% if scheduled_appointments %}
+            {% for appointment in scheduled_appointments %}
+            <div class="appointment-card">
+              <div class="doctor-image">
+                <img src="{% static 'images/avatar.png' %}" alt="Doctor">
+              </div>
+
+              <div class="appointment-info">
+                <h3>
+                  Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}
+                </h3>
+                <p>{{ appointment.doctor.specialty }}</p>
+                <p>{{ appointment.appointment_date|date:"l, F d, Y" }}</p>
+                <p>{{ appointment.clinic.name }}</p>
+              </div>
+
+              <div class="appointment-status">
+                <span class="status-badge confirmed">{{ appointment.status }}</span>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="empty-state">
+              <div class="empty-icon">📆</div>
+              <p>No scheduled appointments yet</p>
+            </div>
+          {% endif %}
+        </div>
+      </section>
+
+      <!-- Canceled Appointments -->
+      <section class="dashboard-card canceled-card">
+        <div class="card-header light-header">
+          <div class="card-title">
+            <span class="card-icon">✖</span>
+            <h2>Cancelled Appointments</h2>
+          </div>
+          <a href="#" class="header-btn light-btn">View Canceled</a>
+        </div>
+
+        <div class="card-body">
+          {% if cancelled_appointments %}
+            {% for appointment in cancelled_appointments %}
+            <div class="appointment-card canceled-item">
+              <div class="doctor-image">
+                <img src="{% static 'images/avatar.png' %}" alt="Doctor">
+              </div>
+
+              <div class="appointment-info">
+                <h3>
+                  Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}
+                </h3>
+                <p>{{ appointment.doctor.specialty }}</p>
+                <p>{{ appointment.appointment_date|date:"F d, Y" }}</p>
+              </div>
+
+              <div class="appointment-status">
+                <span class="status-badge cancelled">{{ appointment.status }}</span>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="empty-state">
+              <div class="empty-icon">📭</div>
+              <p>No cancelled appointments</p>
+            </div>
+          {% endif %}
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Right Side -->
+    <div class="dashboard-right">
+
+      <!-- Pending Appointments -->
+      <section class="dashboard-card pending-card">
+        <div class="card-header soft-blue-header">
+          <div class="card-title">
+            <span class="card-icon">⏳</span>
+            <h2>Pending Appointments</h2>
+          </div>
+          <a href="{% url 'appointments' %}" class="header-btn small-btn">View All</a>
+        </div>
+
+        <div class="card-body pending-body">
+          {% if pending_appointments %}
+            {% for appointment in pending_appointments %}
+            <div class="pending-item">
+              <h3>
+                Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}
+              </h3>
+              <p>{{ appointment.doctor.specialty }}</p>
+              <p>{{ appointment.appointment_date|date:"F d, Y" }}</p>
+              <span class="status-badge pending">{{ appointment.status }}</span>
+            </div>
+            {% endfor %}
+          {% else %}
+            <div class="empty-state">
+              <div class="empty-icon">🗓️</div>
+              <p>No pending appointments</p>
+            </div>
+          {% endif %}
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
