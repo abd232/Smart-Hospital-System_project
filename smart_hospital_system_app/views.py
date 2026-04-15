@@ -3,13 +3,13 @@ import email
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import User, Patient, Doctor, Section,Clinic, MedicalRecord, Appointment
+from .models import ProfileForm, User, Patient, Doctor, Section,Clinic, MedicalRecord, Appointment
 from django.shortcuts import render, redirect
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login as auth_login, logout
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Section, Clinic, Doctor
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'patient/index.html')
@@ -40,6 +40,9 @@ def register(request):
             Patient.objects.create_patient(request.POST)
             return redirect('/login/')
     return render(request, 'account/register.html')
+def logout_view(request):
+    logout(request)
+    return redirect('index') 
 
 def doctors(request):
     sections = Section.objects.all().order_by('name')
@@ -149,3 +152,19 @@ def book(request):
         # Handle booking logic here
         pass
     return render(request, 'patient/booking.html')
+@login_required
+def profile(request):
+    return render(request, 'profile.html')
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(request, 'edit_profile.html', {'form': form})
