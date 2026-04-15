@@ -1,5 +1,5 @@
 import email
-
+import json
 from datetime import datetime
 
 from django.shortcuts import render, get_object_or_404
@@ -9,8 +9,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login, logout
 from django.core.paginator import Paginator
 from django.db.models import Q
-from .models import Section, Clinic, Doctor
+from .models import Section, Clinic, Doctor, AIChatSession, AIChatMessage
 from django.contrib.auth.decorators import login_required
+from .openai_service import ask_hospital_assistant
+
 
 def index(request):
     return render(request, 'patient/index.html')
@@ -143,6 +145,8 @@ def create_appointment(request):
 
 def ai(request):
     # Implement AI-related logic here
+    if not hasattr(request.user, 'patient'):
+        return redirect('login')
     return render(request, 'patient/ai.html')
 
 def about_us(request):
@@ -280,3 +284,119 @@ def patient_appointments(request):
         'cancelled_appointments': cancelled_appointments,
     }
     return render(request, 'patient/appointments.html', context)
+
+
+
+def test_ai_chat(request):
+    message = request.GET.get("message", "Hello")
+    reply = ask_hospital_assistant(message)
+
+    return JsonResponse({
+        "user_message": message,
+        "assistant_reply": reply
+    })
+
+def find_top_doctors(recommended_specialty, keywords=None, limit=3):
+    qs = Doctor.objects.select_related('user', 'clinic', 'clinic__section').all()
+
+    recommended_specialty = (recommended_specialty or '').strip()
+
+    if not keywords:
+        keywords = []
+    keywords = [k.strip() for k in keywords if k and str(k).strip()]
+
+    if recommended_specialty:
+        qs = qs.filter(
+            Q(specialty__icontains=recommended_specialty) |
+            Q(description__icontains=recommended_specialty) |
+            Q(clinic__name__icontains=recommended_specialty) |
+            Q(clinic__section__name__icontains=recommended_specialty)
+        )
+    elif keywords:
+        keyword_query = Q()
+        for keyword in keywords:
+            keyword_query |= (
+                Q(description__icontains=keyword) |
+                Q(specialty__icontains=keyword) |
+                Q(clinic__name__icontains=keyword) |
+                Q(clinic__section__name__icontains=keyword)
+            )
+        qs = qs.filter(keyword_query)
+
+    return qs[:limit]
+
+
+def ai_chat(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Invalid request'}, status=400)
+
+    try:
+        body = json.loads(request.body)
+        message = body.get('message', '').strip()
+        session_id = body.get('session_id')
+    except:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+
+    if not message:
+        return JsonResponse({'error': 'Message is required'}, status=400)
+
+    if session_id:
+        session = get_object_or_404(AIChatSession, id=session_id, user=request.user)
+    else:
+        session = AIChatSession.objects.create(user=request.user)
+
+    AIChatMessage.objects.create(
+        session=session,
+        role='user',
+        content=message
+    )
+
+    history = []
+    old_messages = session.messages.order_by('created_at')
+    for msg in old_messages:
+        history.append({
+            'role': msg.role,
+            'content': msg.content
+        })
+
+    ai_result = ask_hospital_assistant(message, history[:-1])
+
+    assistant_reply = ai_result.get('reply_for_patient', 'Sorry, I could not process that.')
+    enough_information = ai_result.get('enough_information', False)
+    recommended_specialty = ai_result.get('recommended_specialty', '')
+    keywords = ai_result.get('keywords', [])
+    urgency = ai_result.get('urgency', 'normal')
+
+    AIChatMessage.objects.create(
+        session=session,
+        role='assistant',
+        content=assistant_reply
+    )
+
+    doctors_data = []
+
+    if enough_information:
+        doctors = find_top_doctors(recommended_specialty, keywords, limit=3)
+
+        for doctor in doctors:
+            doctors_data.append({
+            'id': doctor.id,
+            'first_name': doctor.user.first_name,
+            'last_name': doctor.user.last_name,
+            'specialty': doctor.specialty,
+            'clinic': doctor.clinic.name,
+            'section': doctor.clinic.section.name,
+            'description': doctor.description,
+        })
+
+        session.is_finished = True
+        session.save()
+
+    return JsonResponse({
+        'session_id': session.id,
+        'assistant_reply': assistant_reply,
+        'enough_information': enough_information,
+        'recommended_specialty': recommended_specialty,
+        'urgency': urgency,
+        'doctors': doctors_data,
+    })

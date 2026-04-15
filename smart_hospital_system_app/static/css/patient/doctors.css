@@ -2,3 +2,24 @@
 .form-inline select {
   max-width: 200px;
 }
+.first-name {
+  border-radius: 50%;
+  background-color: #89c7fabe;
+}
+
+.open-booking-modal {
+  background-color: #3d74a1 !important;
+  color: white !important;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-white h3 {
+  color: #150366;
+}
+
+h1 {
+  color: #150366 !important;
+}

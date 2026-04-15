@@ -3,10 +3,10 @@
 >
   {% for doctor in page_obj %}
   <div
-    class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center"
+    class="rounded-2xl border border-border bg-card p-6 hover:shadow-lg hover:border-primary/30 transition-all duration-300 text-center bg-white"
   >
     <div
-      class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center"
+      class="w-20 h-20 rounded-full bg-accent mx-auto mb-4 flex items-center justify-center first-name"
     >
       <span class="text-2xl font-bold text-primary">
         {{ doctor.user.first_name|slice:":1" }}{{doctor.user.last_name|slice:":1" }}

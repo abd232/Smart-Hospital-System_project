@@ -155,3 +155,26 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['specialization', 'phone', 'experience', 'location', 'image']
     
+class AIChatSession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ai_chat_sessions')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_finished = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "Chat {} - {}".format(self.id, self.user.username)
+
+
+class AIChatMessage(models.Model):
+    ROLE_CHOICES = (
+        ('user', 'User'),
+        ('assistant', 'Assistant'),
+    )
+
+    session = models.ForeignKey(AIChatSession, on_delete=models.CASCADE, related_name='messages')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{} - {}".format(self.role, self.session.id)

@@ -24,4 +24,6 @@ urlpatterns = [
     path('patient/appointments/', views.patient_appointments, name="patient_appointments"),
     path('accept/<int:id>/', views.accept_appointment, name="accept_appointment"),
     path('cancel/<int:id>/', views.cancel_appointment, name="cancel_appointment"),
+    path("test-ai-chat/", views.test_ai_chat, name="test_ai_chat"),
+    path('ai/chat/', views.ai_chat, name='ai_chat'),
 ]
